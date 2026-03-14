@@ -119,6 +119,7 @@ body.dark-mode .bg-overlay {
 
 /* Cards & Grid */
 .card {
+  color: var(--primary-text) !important;
   background-color: var(--card-bg) !important;
   border: 1px solid var(--border-color) !important;
   border-radius: var(--border-radius) !important;
@@ -146,6 +147,10 @@ form {
   border-radius: var(--border-radius);
   border: 1px solid var(--border-color);
   box-shadow: var(--shadow-md);
+}
+
+.form-label {
+  color: var(--primary-text) !important;
 }
 
 .form-control {
@@ -176,9 +181,9 @@ form {
 }
 
 /* Typography */
-h1, h2, h3, h4, h5 {
+h1, h2, h3, h4, h5, h6 {
   font-weight: 700;
-  color: var(--primary-text);
+  color: var(--primary-text) !important;
 }
 
 .text-muted {
