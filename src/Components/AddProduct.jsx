@@ -1,116 +1,141 @@
-import axios from "axios"
-import { useState } from "react"
+import React, { useState } from "react"
 import Navbar from "./Navbar"
+import Footer from "./Footer"
+import { addProduct } from "../api/apiService"
 
-const Addproduct =()=>{
+const Addproduct = () => {
+    const [formData, setFormData] = useState({
+        product_name: "",
+        product_description: "",
+        product_cost: "",
+        product_photo: null
+    })
 
-    const [product_name,setProductName] = useState("")
-    const [product_description,SetProductDescription] = useState("")
-    const [product_cost,setProductCost] = useState("")
-    const [product_photo,setProductPhoto] = useState([])
+    const [loading, setLoading] = useState(false)
+    const [status, setStatus] = useState({ type: "", message: "" })
 
-    // user experience
-    const [loading,setLoading] = useState("")
-    const [message,setMessage] = useState("")
-    const [error,setError] = useState("")
-
-
-    const submit =async(e)=>{
-        e.preventDefault();
-
-        // set loading hook variable to show loading message 
-        setLoading("Please wait as we upload your data")
-        try {
-            // first we need an empty object 
-            const data = new FormData()
-            data.append("product_name",product_name)
-            data.append("product_description",product_description)
-            data.append("product_cost",product_cost)
-            data.append("product_photo",product_photo)
-            
-            const response = await axios.post(                // we use axios to post the data to our backend API 
-            
-                "https://polymerthcedric.pythonanywhere.com/api/add_product",
-                data
-            )
-
-            // set loading to an empty string 
-            setLoading("")
-            setMessage(response.data.success)
-            
-            
-        } catch (error) {
-            setLoading("")  //we do this to reset the loading to an empty sting to remove "please wait....
-            setError(error.message)
-        }
-
-
+    const handleChange = (e) => {
+        const { name, value, files } = e.target
+        setFormData(prev => ({
+            ...prev,
+            [name]: files ? files[0] : value
+        }))
     }
 
+    const submit = async (e) => {
+        e.preventDefault()
+        setLoading(true)
+        setStatus({ type: "info", message: "Uploading product to PythonAnywhere..." })
+        
+        try {
+            const response = await addProduct(formData)
+            setStatus({ type: "success", message: response.data.success || "Product uploaded successfully!" })
+            // Reset form
+            setFormData({
+                product_name: "",
+                product_description: "",
+                product_cost: "",
+                product_photo: null
+            })
+            e.target.reset()
+        } catch (error) {
+            setStatus({ type: "danger", message: error.response?.data?.error || "Error uploading product. Please try again." })
+            console.error(error)
+        } finally {
+            setLoading(false)
+        }
+    }
 
-    return(
-        <div className="row justify-content-center mt-4 " >
-            <Navbar/>
+    return (
+        <div className="container-fluid p-0 min-vh-100 d-flex flex-column">
             <div className="bg-overlay"></div>
-            <div className="min-vh-100 d-flex justify-content-center align-items-center">
-              <div className="col-md-6 card shadow p-4" >
-                    <h3>
-                        Upload products
-                    </h3>
-                    {loading}
-                    {message}
-                    {error}
-                    <form onSubmit={submit}>
-                        <input
-                    
-                        placeholder="Enter product name"
-                        className="form-control"
-                        value={product_name}
-                        onChange={(e)=>setProductName(e.target.value)}
-                        required/>
-                    
-                        <br/>
+            <Navbar />
+            
+            <div className="container flex-grow-1 d-flex justify-content-center align-items-center my-5">
+                <div className="col-md-6 col-lg-5">
+                    <div className="card shadow-lg border-0">
+                        <div className="card-body p-5 text-center">
+                            <h2 className="mb-4 fw-bold">Upload New Product</h2>
+                            
+                            {status.message && (
+                                <div className={`alert alert-${status.type} alert-dismissible fade show`} role="alert">
+                                    {status.message}
+                                    <button type="button" className="btn-close" onClick={() => setStatus({type:"", message:""})}></button>
+                                </div>
+                            )}
 
-                        <textarea
-                        className="form-control"
-                        placeholder="Describe your product"
-                        value={product_description}
-                        onChange={(e)=>SetProductDescription(e.target.value)}
-                        required>
+                            <form onSubmit={submit} className="text-start">
+                                <div className="mb-3">
+                                    <label className="form-label fw-semibold">Product Name</label>
+                                    <input
+                                        type="text"
+                                        name="product_name"
+                                        placeholder="e.g. Paracetamol 500mg"
+                                        className="form-control"
+                                        value={formData.product_name}
+                                        onChange={handleChange}
+                                        required
+                                    />
+                                </div>
 
-                        </textarea>
+                                <div className="mb-3">
+                                    <label className="form-label fw-semibold">Description</label>
+                                    <textarea
+                                        name="product_description"
+                                        className="form-control"
+                                        placeholder="Brief details about the medicine..."
+                                        rows="3"
+                                        value={formData.product_description}
+                                        onChange={handleChange}
+                                        required
+                                    ></textarea>
+                                </div>
 
-                        <br />
+                                <div className="mb-3">
+                                    <label className="form-label fw-semibold">Cost (KES)</label>
+                                    <input
+                                        type="number"
+                                        name="product_cost"
+                                        placeholder="Price in Kenya Shillings"
+                                        className="form-control"
+                                        value={formData.product_cost}
+                                        onChange={handleChange}
+                                        required
+                                    />
+                                </div>
 
-                        <input
-                        type="number"
-                        placeholder="Enter product cost"
-                        value={product_cost}
-                        onChange={(e)=>setProductCost(e.target.value)}
-                        className="form-control"
-                        required
-                        />
+                                <div className="mb-4">
+                                    <label className="form-label fw-semibold">Product Image</label>
+                                    <input
+                                        type="file"
+                                        name="product_photo"
+                                        className="form-control"
+                                        accept="image/*"
+                                        onChange={handleChange}
+                                        required
+                                    />
+                                </div>
 
-                        <br />
-
-                        {/* file input is different because they are in an array  */}
-
-                        <input
-                        type="file"
-                        className="form-control"
-                        accept="image/*"
-                        onChange={(e)=>setProductPhoto(e.target.files[0])}
-                        required />
-                        <br />
-
-                        <button className="btn btn-primary" type="submit">Upload Product</button>
-
-                    </form>
-
+                                <button 
+                                    className="btn btn-primary w-100 py-3 fw-bold shadow-sm" 
+                                    type="submit"
+                                    disabled={loading}
+                                >
+                                    {loading ? (
+                                        <>
+                                            <span className="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+                                            Uploading...
+                                        </>
+                                    ) : "Upload Product"}
+                                </button>
+                            </form>
+                        </div>
+                    </div>
                 </div>
             </div>
-          
+            <Footer />
         </div>
     )
 }
+
 export default Addproduct

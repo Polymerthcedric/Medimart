@@ -1,116 +1,135 @@
-import { useState } from "react"
-import { Link } from "react-router-dom"
-import axios from "axios"
+import React, { useState } from "react"
+import { Link, useNavigate } from "react-router-dom"
+import { signUp } from "../api/apiService"
+import Navbar from "./Navbar"
+import Footer from "./Footer"
 
-const Signup=()=>{
+const Signup = () => {
+    const [formData, setFormData] = useState({
+        username: "",
+        email: "",
+        password: "",
+        phone: ""
+    })
 
-    const[username,setUsername]=useState("")
-    const[email,setEmail]=useState("")
-    const[password,setPassword]=useState("")
-    const[phone,setPhone]=useState("")
+    const [loading, setLoading] = useState(false)
+    const [status, setStatus] = useState({ type: "", message: "" })
 
-    // user experience 
-    const [success,setSuccess] = useState("")
-    const [error,setError] = useState("")
-    const[loading,setLoading] = useState("")
+    const navigate = useNavigate()
 
-    const submit =async(e)=>{
-        e.preventDefault()
-
-        // set loading hook variable to show loading message 
-        setLoading("Please wait as we upload your data")
-        try {
-            // this is like a jerrican(container)
-            const data = new FormData() 
-            data.append("username",username)
-            data.append("email",email)
-            data.append("password",password)
-            data.append("phone",phone)
-            
-            // we use axios to post the data to our backend API 
-            const response = await axios.post(
-                "https://polymerthcedric.pythonanywhere.com/api/signup",
-                data
-            )
-
-            // set loading to an empty string 
-            setLoading("")
-            setSuccess(response.data.success)
-
-
-
-        } catch (error) {
-          setLoading("")  //reset the loading to an empty sting to remove "please wait...." 
-          setError(error.message)
-        }
-
-
+    const handleChange = (e) => {
+        setFormData({ ...formData, [e.target.name]: e.target.value })
     }
 
+    const submit = async (e) => {
+        e.preventDefault()
+        setLoading(true)
+        setStatus({ type: "", message: "" })
 
-    return(
-        <div className="row justify-content-center mt-4 bic">
-            <div className="col-md-6 card shadow p-4 ">
+        try {
+            const response = await signUp(formData)
+            if (response.data.success) {
+                setStatus({ type: "success", message: "Account created successfully!" })
+                setTimeout(() => navigate("/signin"), 2000)
+            } else {
+                setStatus({ type: "danger", message: response.data.message || "Signup failed" })
+            }
+        } catch (error) {
+            setStatus({ type: "danger", message: error.response?.data?.message || "Connection error. Please try again." })
+            console.error(error)
+        } finally {
+            setLoading(false)
+        }
+    }
 
-                <h2 className="text-success bg-color">Signup</h2>
-                    {loading}
-                    {error}
-                    {success}
+    return (
+        <div className="container-fluid p-0 min-vh-100 d-flex flex-column">
+            <div className="bg-overlay"></div>
+            <Navbar />
+            
+            <div className="container flex-grow-1 d-flex justify-content-center align-items-center my-5">
+                <div className="col-md-5 col-lg-4">
+                    <div className="card shadow-lg border-0">
+                        <div className="card-body p-5 text-center">
+                            <h2 className="mb-4 fw-bold">Sign Up</h2>
+                            
+                            {status.message && (
+                                <div className={`alert alert-${status.type}`} role="alert">
+                                    {status.message}
+                                </div>
+                            )}
 
-                 <form onSubmit={submit}className="form-container ">
-                   <div className="form-group">
-                   <input 
-                    type="text"
-                    className="form-control product-container"
-                    placeholder="Enter Username" 
-                    value={username}
-                    onChange={(e)=>setUsername(e.target.value)}
-                    required 
-                    />
-                    
-                   </div>
-                    
-                   <div className="form-group">
-                   <input 
-                    type="email"
-                    className="form-control product-container"
-                    placeholder="Enter Email"
-                    value={email}
-                    onChange={(e)=>setEmail(e.target.value)}
-                    required
-                    />
-                   </div>
-                    
-                   <div className="form-group">
-                   <input 
-                    type="password" 
-                    className="form-control product-container"
-                    placeholder="Enter password"
-                    onChange={(e)=>setPassword(e.target.value)}
-                    required
-                    />
-                   </div>
-        
-                    <div className="form-group">
-                    <input 
-                    type="text" 
-                    className="form-control product-container"
-                    placeholder="Enter Phone"
-                    onChange={(e)=>setPhone(e.target.value)}
-                    required
-                    />
+                            <form onSubmit={submit} className="text-start">
+                                <div className="mb-3">
+                                    <label className="form-label fw-semibold">Username</label>
+                                    <input
+                                        type="text"
+                                        name="username"
+                                        className="form-control"
+                                        placeholder="Choose a username"
+                                        value={formData.username}
+                                        onChange={handleChange}
+                                        required
+                                    />
+                                </div>
+
+                                <div className="mb-3">
+                                    <label className="form-label fw-semibold">Email Address</label>
+                                    <input
+                                        type="email"
+                                        name="email"
+                                        className="form-control"
+                                        placeholder="name@example.com"
+                                        value={formData.email}
+                                        onChange={handleChange}
+                                        required
+                                    />
+                                </div>
+
+                                <div className="mb-3">
+                                    <label className="form-label fw-semibold">Phone Number</label>
+                                    <input
+                                        type="tel"
+                                        name="phone"
+                                        className="form-control"
+                                        placeholder="0712345678"
+                                        value={formData.phone}
+                                        onChange={handleChange}
+                                        required
+                                    />
+                                </div>
+
+                                <div className="mb-4">
+                                    <label className="form-label fw-semibold">Password</label>
+                                    <input
+                                        type="password"
+                                        name="password"
+                                        className="form-control"
+                                        placeholder="••••••••"
+                                        value={formData.password}
+                                        onChange={handleChange}
+                                        required
+                                    />
+                                </div>
+
+                                <button 
+                                    type="submit" 
+                                    className="btn btn-primary w-100 py-3 fw-bold shadow-sm"
+                                    disabled={loading}
+                                >
+                                    {loading ? "Creating account..." : "Create Account"}
+                                </button>
+                            </form>
+
+                            <div className="mt-4 text-center">
+                                <p className="mb-1 text-muted">Already have an account?</p>
+                                <Link to='/signin' className="fw-bold text-decoration-none">Sign In Instead</Link>
+                            </div>
+                        </div>
                     </div>
-                    
-                    <button type="submit" className=" btn btn-primary">Signup</button>
-
-                </form>
-                <p className="text-dark">
-                    Already have an account ?
-                    <Link to ='/signin'>signin</Link>
-                </p>
-
-
+                </div>
             </div>
+            <Footer />
         </div>
     )
 }

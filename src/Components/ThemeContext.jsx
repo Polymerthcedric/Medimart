@@ -3,16 +3,19 @@ import React, { createContext, useState, useEffect } from 'react';
 const ThemeContext = createContext();
 
 export const ThemeProvider = ({ children }) => {
-  // Check if user previously set a preference and store in localStorage
+  // Check localStorage, then fallback to system preference
   const [darkMode, setDarkMode] = useState(() => {
     const savedMode = localStorage.getItem('darkMode');
-    return savedMode === 'true';
+    if (savedMode !== null) {
+      return savedMode === 'true';
+    }
+    // Fallback to system dark mode preference
+    return window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
   });
 
-  // Update localStorage when theme changes
+  // Update localStorage and body class when theme changes
   useEffect(() => {
     localStorage.setItem('darkMode', darkMode);
-    // Add or remove dark-mode class to body
     if (darkMode) {
       document.body.classList.add('dark-mode');
     } else {
@@ -20,7 +23,18 @@ export const ThemeProvider = ({ children }) => {
     }
   }, [darkMode]);
 
-  // Toggle function
+  // Listen for system theme changes
+  useEffect(() => {
+    const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+    const handleChange = (e) => {
+      if (localStorage.getItem('darkMode') === null) {
+        setDarkMode(e.matches);
+      }
+    };
+    mediaQuery.addEventListener('change', handleChange);
+    return () => mediaQuery.removeEventListener('change', handleChange);
+  }, []);
+
   const toggleDarkMode = () => {
     setDarkMode(!darkMode);
   };
