@@ -1,6 +1,5 @@
-import 'bootstrap/dist/css/bootstrap.min.css';
-import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import './App.css';
+import './index.css';
 import Signup from './Components/Signup';
 import Signin from './Components/Signin';
 import Addproduct from './Components/AddProduct';
