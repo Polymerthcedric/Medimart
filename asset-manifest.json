@@ -1,17 +1,15 @@
 {
   "files": {
-    "main.css": "/Medimart/static/css/main.efd42c02.css",
-    "main.js": "/Medimart/static/js/main.ffafda0b.js",
+    "main.css": "/Medimart/static/css/main.c885dcd4.css",
+    "main.js": "/Medimart/static/js/main.77f9a298.js",
     "static/js/453.cb52bb7f.chunk.js": "/Medimart/static/js/453.cb52bb7f.chunk.js",
-    "static/media/loi.jpg": "/Medimart/static/media/loi.4f068d599f2b6a86823d.jpg",
-    "static/media/medical1.jpg": "/Medimart/static/media/medical1.78f21bedd07a1d03dc51.jpg",
     "index.html": "/Medimart/index.html",
-    "main.efd42c02.css.map": "/Medimart/static/css/main.efd42c02.css.map",
-    "main.ffafda0b.js.map": "/Medimart/static/js/main.ffafda0b.js.map",
+    "main.c885dcd4.css.map": "/Medimart/static/css/main.c885dcd4.css.map",
+    "main.77f9a298.js.map": "/Medimart/static/js/main.77f9a298.js.map",
     "453.cb52bb7f.chunk.js.map": "/Medimart/static/js/453.cb52bb7f.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.efd42c02.css",
-    "static/js/main.ffafda0b.js"
+    "static/css/main.c885dcd4.css",
+    "static/js/main.77f9a298.js"
   ]
 }
