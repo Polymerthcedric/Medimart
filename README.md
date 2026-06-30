@@ -1,6 +1,6 @@
 # Medimart — Medical Supplies E-Commerce
 
-A full-stack clinical supplies e-commerce platform with **M-Pesa mobile payments**, **AI chatbot support**, and **dark mode**. Frontend built with React 19, backend powered by Django REST API.
+A full-stack clinical supplies e-commerce platform with **M-Pesa mobile payments**, **AI chatbot support**, and **dark mode**. Frontend built with React 19, backend powered by Flask REST API.
 
 🔗 **Live:** https://Polymerthcedric.github.io/Medimart
 
@@ -22,7 +22,7 @@ A full-stack clinical supplies e-commerce platform with **M-Pesa mobile payments
 | **Frontend** | React 19, React Router 7, Tailwind CSS 3 |
 | **HTTP Client** | Axios |
 | **Icons** | Lucide React |
-| **Backend** | Django REST API (PythonAnywhere) |
+| **Backend** | Flask REST API (PythonAnywhere) |
 | **Deployment** | GitHub Pages via `gh-pages` |
 
 ## Getting Started
@@ -34,8 +34,10 @@ npm start            # → http://localhost:3000
 
 ### Backend API
 
-The app connects to a Django REST API at:
+The app connects to a Flask REST API at:
 `https://polymerthcedric.pythonanywhere.com/api`
+
+Backend source: [Polymerthcedric/medimart-backend](https://github.com/Polymerthcedric/medimart-backend)
 
 | Endpoint | Method | Description |
 |----------|--------|-------------|
