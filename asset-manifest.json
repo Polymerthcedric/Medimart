@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/Medimart/static/css/main.01ccdb60.css",
-    "main.js": "/Medimart/static/js/main.d3d31f41.js",
+    "main.js": "/Medimart/static/js/main.ee80c20a.js",
     "static/js/453.cb52bb7f.chunk.js": "/Medimart/static/js/453.cb52bb7f.chunk.js",
     "index.html": "/Medimart/index.html",
     "main.01ccdb60.css.map": "/Medimart/static/css/main.01ccdb60.css.map",
-    "main.d3d31f41.js.map": "/Medimart/static/js/main.d3d31f41.js.map",
+    "main.ee80c20a.js.map": "/Medimart/static/js/main.ee80c20a.js.map",
     "453.cb52bb7f.chunk.js.map": "/Medimart/static/js/453.cb52bb7f.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.01ccdb60.css",
-    "static/js/main.d3d31f41.js"
+    "static/js/main.ee80c20a.js"
   ]
 }
