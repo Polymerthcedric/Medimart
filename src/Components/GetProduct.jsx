@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom"
 import Navbar from "./Navbar"
 import Carousel from "./Carousel"
 import Footer from "./Footer"
+import { useAuth } from "../Context/AuthContext"
 import { getProducts, deleteProduct, IMAGE_BASE_URL } from "../api/apiService"
 import { Search, Plus, PackageSearch, Trash2, X } from "lucide-react"
 
@@ -16,6 +17,7 @@ const Getproducts = () => {
     const [deleting, setDeleting] = useState(false)
 
     const navigate = useNavigate()
+    const { user } = useAuth()
 
     const handleDelete = async () => {
         if (!deleteTarget) return
@@ -131,13 +133,15 @@ const Getproducts = () => {
                                                 e.target.src = 'https://via.placeholder.com/400x300?text=Product+Image'
                                             }}
                                         />
-                                        <button
-                                            className="absolute top-4 left-4 bg-red-500/90 hover:bg-red-600 text-white p-2 rounded-xl opacity-0 group-hover:opacity-100 transition-all shadow-lg backdrop-blur z-10"
-                                            onClick={(e) => { e.stopPropagation(); setDeleteTarget(product) }}
-                                            aria-label="Delete product"
-                                        >
-                                            <Trash2 className="w-4 h-4" />
-                                        </button>
+                                        {user && (
+                                            <button
+                                                className="absolute top-4 left-4 bg-red-500/90 hover:bg-red-600 text-white p-2 rounded-xl opacity-0 group-hover:opacity-100 transition-all shadow-lg backdrop-blur z-10"
+                                                onClick={(e) => { e.stopPropagation(); setDeleteTarget(product) }}
+                                                aria-label="Delete product"
+                                            >
+                                                <Trash2 className="w-4 h-4" />
+                                            </button>
+                                        )}
                                         <div className="absolute top-4 right-4 bg-white/90 dark:bg-slate-800/90 backdrop-blur px-3 py-1 rounded-full text-xs font-bold text-primary-600 dark:text-primary-400 shadow-sm">
                                             New Arrival
                                         </div>
