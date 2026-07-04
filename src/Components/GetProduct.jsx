@@ -4,7 +4,7 @@ import Navbar from "./Navbar"
 import Carousel from "./Carousel"
 import Footer from "./Footer"
 import { getProducts, deleteProduct, IMAGE_BASE_URL } from "../api/apiService"
-import { Search, ShoppingCart, Plus, PackageSearch, Trash2, X } from "lucide-react"
+import { Search, Plus, PackageSearch, Trash2, X } from "lucide-react"
 
 const Getproducts = () => {
     const [products, setProducts] = useState([])

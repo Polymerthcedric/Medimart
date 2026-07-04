@@ -77,7 +77,7 @@ const Signin = () => {
                                 <div>
                                     <div className="flex items-center justify-between mb-2 ml-1">
                                         <label className="text-sm font-bold text-slate-700 dark:text-slate-300">Password</label>
-                                        <a href="#" className="text-xs font-bold text-primary-600 hover:underline">Forgot?</a>
+                                        <span className="text-xs font-bold text-slate-300 dark:text-slate-500 cursor-not-allowed">Forgot?</span>
                                     </div>
                                     <input
                                         type="password"

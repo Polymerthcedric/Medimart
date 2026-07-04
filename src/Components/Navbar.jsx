@@ -1,12 +1,10 @@
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import ThemeToggle from './ThemeToggle';
-import ThemeContext from './ThemeContext';
 import { useAuth } from '../Context/AuthContext';
 import { Pill, Menu, X, User, LogOut } from 'lucide-react';
 
 const Navbar = () => {
-  const { darkMode } = useContext(ThemeContext);
   const { user, logout } = useAuth();
   const location = useLocation();
   const navigate = useNavigate();
