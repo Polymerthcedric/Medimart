@@ -21,8 +21,8 @@ const Getproducts = () => {
         if (!deleteTarget) return
         setDeleting(true)
         try {
-            await deleteProduct(deleteTarget.id)
-            setProducts(prev => prev.filter(p => p.id !== deleteTarget.id))
+            await deleteProduct(deleteTarget.product_id)
+            setProducts(prev => prev.filter(p => p.product_id !== deleteTarget.product_id))
             setDeleteTarget(null)
         } catch (err) {
             alert('Failed to delete product. Please try again.')
@@ -119,7 +119,7 @@ const Getproducts = () => {
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
                         {filteredProducts.length > 0 ? (
                             filteredProducts.map((product) => (
-                                <div key={product.id || product.product_name} className="group bg-white dark:bg-slate-900 rounded-3xl overflow-hidden border border-slate-100 dark:border-slate-800 shadow-sm hover:shadow-2xl hover:shadow-primary-500/10 transition-all duration-500 hover:-translate-y-2 flex flex-col h-full">
+                                <div key={product.product_id || product.product_name} className="group bg-white dark:bg-slate-900 rounded-3xl overflow-hidden border border-slate-100 dark:border-slate-800 shadow-sm hover:shadow-2xl hover:shadow-primary-500/10 transition-all duration-500 hover:-translate-y-2 flex flex-col h-full">
                                     <div className="relative overflow-hidden aspect-[4/3]">
                                         <img
                                             className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
