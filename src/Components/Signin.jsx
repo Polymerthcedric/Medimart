@@ -1,6 +1,7 @@
 import React, { useState } from "react"
 import { Link, useNavigate } from "react-router-dom"
 import { signIn } from "../api/apiService"
+import { useAuth } from "../Context/AuthContext"
 import Navbar from "./Navbar"
 import Footer from "./Footer"
 import { LogIn, XCircle, Loader2 } from "lucide-react"
@@ -12,6 +13,7 @@ const Signin = () => {
     const [error, setError] = useState("")
 
     const navigate = useNavigate()
+    const { login } = useAuth()
 
     const submit = async (e) => {
         e.preventDefault()
@@ -22,7 +24,7 @@ const Signin = () => {
             const response = await signIn({ email, password })
             
             if (response.data.user) {
-                localStorage.setItem("user", JSON.stringify(response.data.user))
+                login(response.data.user)
                 navigate("/")
             } else {
                 setError(response.data.message || "Invalid credentials")
