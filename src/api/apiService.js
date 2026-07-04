@@ -43,6 +43,12 @@ export const sendChatMessage = (message) => {
   return api.post('/chat', { message });
 };
 
+export const deleteProduct = (productId) => {
+  const data = new FormData();
+  data.append('product_id', productId);
+  return api.post('/delete_product', data);
+};
+
 export const IMAGE_BASE_URL = `${BASE_URL}/static/images/`;
 
 export default api;

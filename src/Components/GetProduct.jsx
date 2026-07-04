@@ -3,8 +3,8 @@ import { useNavigate } from "react-router-dom"
 import Navbar from "./Navbar"
 import Carousel from "./Carousel"
 import Footer from "./Footer"
-import { getProducts, IMAGE_BASE_URL } from "../api/apiService"
-import { Search, ShoppingCart, Plus, PackageSearch } from "lucide-react"
+import { getProducts, deleteProduct, IMAGE_BASE_URL } from "../api/apiService"
+import { Search, ShoppingCart, Plus, PackageSearch, Trash2, X } from "lucide-react"
 
 const Getproducts = () => {
     const [products, setProducts] = useState([])
@@ -12,8 +12,24 @@ const Getproducts = () => {
     const [error, setError] = useState("")
     const [searchQuery, setSearchQuery] = useState("")
     const [filteredProducts, setFilteredProducts] = useState([])
+    const [deleteTarget, setDeleteTarget] = useState(null)
+    const [deleting, setDeleting] = useState(false)
 
     const navigate = useNavigate()
+
+    const handleDelete = async () => {
+        if (!deleteTarget) return
+        setDeleting(true)
+        try {
+            await deleteProduct(deleteTarget.id)
+            setProducts(prev => prev.filter(p => p.id !== deleteTarget.id))
+            setDeleteTarget(null)
+        } catch (err) {
+            alert('Failed to delete product. Please try again.')
+        } finally {
+            setDeleting(false)
+        }
+    }
 
     const fetchProducts = async () => {
         setLoading(true)
@@ -113,6 +129,13 @@ const Getproducts = () => {
                                                 e.target.src = 'https://via.placeholder.com/400x300?text=Product+Image'
                                             }}
                                         />
+                                        <button
+                                            className="absolute top-4 left-4 bg-red-500/90 hover:bg-red-600 text-white p-2 rounded-xl opacity-0 group-hover:opacity-100 transition-all shadow-lg backdrop-blur z-10"
+                                            onClick={(e) => { e.stopPropagation(); setDeleteTarget(product) }}
+                                            aria-label="Delete product"
+                                        >
+                                            <Trash2 className="w-4 h-4" />
+                                        </button>
                                         <div className="absolute top-4 right-4 bg-white/90 dark:bg-slate-800/90 backdrop-blur px-3 py-1 rounded-full text-xs font-bold text-primary-600 dark:text-primary-400 shadow-sm">
                                             New Arrival
                                         </div>
@@ -155,6 +178,42 @@ const Getproducts = () => {
                     </div>
                 )}
             </main>
+            {deleteTarget && (
+                <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm p-4">
+                    <div className="bg-white dark:bg-slate-900 rounded-3xl p-8 max-w-md w-full shadow-2xl border border-slate-100 dark:border-slate-800">
+                        <div className="flex items-center justify-between mb-6">
+                            <h3 className="text-xl font-bold text-slate-900 dark:text-white">Delete Product</h3>
+                            <button
+                                className="text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 p-2 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800 transition-all"
+                                onClick={() => setDeleteTarget(null)}
+                                disabled={deleting}
+                            >
+                                <X className="w-5 h-5" />
+                            </button>
+                        </div>
+                        <p className="text-slate-600 dark:text-slate-400 mb-2">
+                            Are you sure you want to delete <strong className="text-slate-900 dark:text-white">{deleteTarget.product_name}</strong>?
+                        </p>
+                        <p className="text-sm text-red-500 mb-8">This action cannot be undone.</p>
+                        <div className="flex space-x-4">
+                            <button
+                                className="flex-1 py-3 rounded-2xl bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 font-bold hover:bg-slate-200 dark:hover:bg-slate-700 transition-all"
+                                onClick={() => setDeleteTarget(null)}
+                                disabled={deleting}
+                            >
+                                Cancel
+                            </button>
+                            <button
+                                className="flex-1 py-3 rounded-2xl bg-red-600 hover:bg-red-700 text-white font-bold transition-all shadow-lg shadow-red-600/20 disabled:opacity-50"
+                                onClick={handleDelete}
+                                disabled={deleting}
+                            >
+                                {deleting ? "Deleting..." : "Delete"}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
             <Footer />
         </div>
     )
