@@ -25,7 +25,9 @@ const Getproducts = () => {
             setProducts(prev => prev.filter(p => p.product_id !== deleteTarget.product_id))
             setDeleteTarget(null)
         } catch (err) {
-            alert('Failed to delete product. Please try again.')
+            const msg = err.response?.data?.error || err.message || 'Failed to delete product'
+            alert('Error: ' + msg)
+            console.error('Delete error:', err)
         } finally {
             setDeleting(false)
         }
