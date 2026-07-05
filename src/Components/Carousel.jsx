@@ -5,17 +5,17 @@ const Carousel = () => {
   
   const slides = [
     {
-      image: '/images/medical1.jpg',
+      image: `${process.env.PUBLIC_URL}/images/medical1.jpg`,
       title: 'Advanced Medical Equipment',
       description: 'Find the latest technology for your healthcare facility.'
     },
     {
-      image: '/images/microscope.jpg',
+      image: `${process.env.PUBLIC_URL}/images/microscope.jpg`,
       title: 'Laboratory Essentials',
       description: 'Precision instruments for accurate diagnostics.'
     },
     {
-      image: '/images/pexels-tara-winstead-7723388.jpg',
+      image: `${process.env.PUBLIC_URL}/images/pexels-tara-winstead-7723388.jpg`,
       title: 'Pharmacy Supplies',
       description: 'Wide range of medications and clinical products.'
     }

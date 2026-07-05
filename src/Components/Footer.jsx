@@ -31,15 +31,15 @@ const Footer = () => {
             <ul className="space-y-2 text-sm text-slate-600 dark:text-slate-400">
               <li className="flex items-start space-x-2">
                 <MapPin className="w-4 h-4 text-primary-500 mt-0.5" />
-                <span>123 Medical Plaza, Health Avenue, Nairobi</span>
+                <a href="https://maps.google.com/?q=Nairobi+Kenya" target="_blank" rel="noopener noreferrer" className="hover:text-primary-500 transition-colors">Nairobi, Kenya</a>
               </li>
               <li className="flex items-center space-x-2">
                 <Phone className="w-4 h-4 text-primary-500" />
-                <span>+254141402525</span>
+                <a href="tel:+254141402525" className="hover:text-primary-500 transition-colors">+254141402525</a>
               </li>
               <li className="flex items-center space-x-2">
                 <Mail className="w-4 h-4 text-primary-500" />
-                <span>fidelcedricodoyo@gmail.com</span>
+                <a href="mailto:fidelcedricodoyo@gmail.com" className="hover:text-primary-500 transition-colors">fidelcedricodoyo@gmail.com</a>
               </li>
             </ul>
           </div>
@@ -48,7 +48,7 @@ const Footer = () => {
             <h4 className="text-slate-900 dark:text-white font-bold mb-4">Stay Connected</h4>
             <div className="flex space-x-4">
               <a 
-                href="https://instagram.com/polymerth_" 
+                href="https://www.instagram.com/polymerth_/" 
                 target="_blank" 
                 rel="noopener noreferrer" 
                 className="w-10 h-10 rounded-xl bg-slate-200 dark:bg-slate-800 flex items-center justify-center hover:bg-primary-500 hover:text-white transition-all text-slate-600 dark:text-slate-400"
