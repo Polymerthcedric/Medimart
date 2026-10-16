@@ -1,10 +1,12 @@
-# Medimart
+# Medimart storefront prototype
 
-A medical supplies e-commerce platform that connects directly to real value. Features M-Pesa payments and an AI-driven chatbot. Built with React.
+A React demo for browsing medical-supply listings, creating an account, and trying the checkout flow. The chat helper uses scripted responses, and M-Pesa payments are for sandbox testing. This is not a live shop or medical service.
 
-## The Stance
-E-commerce shouldn't require a 30-plugin monolithic platform. Medimart strips away the bureaucracy of online selling. It focuses on exactly two things: getting medical supplies to people who need them, and seamlessly taking payment via M-Pesa. It's an autonomous sales machine.
+## Run locally
 
-## Running
-1. `npm install`
-2. `npm start`
+```sh
+npm install
+npm start
+```
+
+The app needs the Flask API configured separately. See the [backend project](https://github.com/Polymerthcedric/medimart-backend) for its setup.
