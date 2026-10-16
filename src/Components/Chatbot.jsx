@@ -5,7 +5,7 @@ import { Bot, MessageCircle, X, Send, User } from 'lucide-react';
 const Chatbot = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState([
-    { role: 'bot', text: 'Hello! Welcome to Medimart. How can I help you today?' }
+    { role: 'bot', text: 'Hi! I can help you find products in this demo store. What are you looking for?' }
   ]);
   const [input, setInput] = useState('');
   const [loading, setLoading] = useState(false);
@@ -33,7 +33,7 @@ const Chatbot = () => {
       const response = await sendChatMessage(input);
       setMessages(prev => [...prev, { role: 'bot', text: response.data.response }]);
     } catch (error) {
-      setMessages(prev => [...prev, { role: 'bot', text: 'Sorry, I am having trouble connecting to the server. Please try again later.' }]);
+      setMessages(prev => [...prev, { role: 'bot', text: 'I can’t reach the store service right now. Please try again later.' }]);
     } finally {
       setLoading(false);
     }
@@ -52,10 +52,10 @@ const Chatbot = () => {
                     <MessageCircle className="w-6 h-6" />
                 </div>
                 <div>
-                    <h5 className="font-black tracking-tight">Medimart AI</h5>
+                    <h5 className="font-black tracking-tight">Medimart helper</h5>
                     <div className="flex items-center space-x-1">
                         <span className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></span>
-                        <span className="text-[10px] font-bold opacity-80 uppercase tracking-widest">Online</span>
+                        <span className="text-[10px] font-bold opacity-80 uppercase tracking-widest">Store demo</span>
                     </div>
                 </div>
             </div>
@@ -91,7 +91,7 @@ const Chatbot = () => {
                     <span className="w-1.5 h-1.5 bg-slate-300 rounded-full animate-bounce [animation-delay:0.2s]"></span>
                     <span className="w-1.5 h-1.5 bg-slate-300 rounded-full animate-bounce [animation-delay:0.4s]"></span>
                   </span>
-                  <span>AI is thinking...</span>
+                  <span>Looking that up...</span>
                 </div>
               </div>
             )}
