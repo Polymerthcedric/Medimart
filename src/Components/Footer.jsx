@@ -15,7 +15,7 @@ const Footer = () => {
               </span>
             </Link>
             <p className="text-slate-600 dark:text-slate-400 text-sm leading-relaxed">
-              Your trusted partner for quality medical supplies and equipment. We provide essential healthcare products to your doorstep.
+              Demo storefront with sample listings only. No real orders, payments, or medical service.
             </p>
           </div>
           
