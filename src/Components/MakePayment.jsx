@@ -98,7 +98,7 @@ const Makepayment = () => {
               <div className="mb-8 p-6 rounded-3xl bg-slate-50 dark:bg-slate-800 border border-slate-100 dark:border-slate-700/50">
                 <div className="flex items-center justify-between mb-4">
                     <span className="text-xs font-black uppercase tracking-widest text-slate-400">Item to Purchase</span>
-                    <span className="text-xs bg-emerald-100 dark:bg-emerald-900/30 text-emerald-600 dark:text-emerald-400 px-2 py-1 rounded-lg font-bold">Secure</span>
+                    <span className="text-xs bg-emerald-100 dark:bg-emerald-900/30 text-emerald-600 dark:text-emerald-400 px-2 py-1 rounded-lg font-bold">Sandbox demo</span>
                 </div>
                 <h4 className="text-xl font-bold text-slate-900 dark:text-white mb-2">{product.product_name}</h4>
                 <div className="text-3xl font-black text-emerald-600 dark:text-emerald-400 tracking-tighter">KES {product.product_cost}</div>
@@ -135,7 +135,7 @@ const Makepayment = () => {
                     />
                   </div>
                   <p className="mt-3 text-xs text-slate-500 dark:text-slate-400 leading-relaxed font-medium">
-                    Enter the phone number that will receive the <span className="text-emerald-600 font-bold">M-Pesa PIN prompt</span> to complete this transaction.
+                    Enter a test phone number for the <span className="text-emerald-600 font-bold">sandbox STK Push simulation</span>. No real charge is made.
                   </p>
                 </div>
 
@@ -149,7 +149,7 @@ const Makepayment = () => {
                         <Loader2 className="w-5 h-5 animate-spin" />
                         <span>Processing...</span>
                     </span>
-                  ) : "Confirm & Pay Now"}
+                  ) : "Send sandbox STK Push (demo)"}
                 </button>
               </form>
               
